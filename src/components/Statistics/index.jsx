@@ -40,11 +40,18 @@ class Statistics extends Component {
 	render() {
 		return (
 			<div className={classes.stats}>
-				<span >good: {this.props.good}</span>
-				<span>neutral: {this.props.neutral}</span>
-				<span>bad: {this.props.bad}</span>
-				<span>total: {this.state.total}</span>
-				<span>positive percent: {this.state.percent}%</span>
+				{this.state.total ? (
+					<div className={classes.stats}>
+						<span >good: {this.props.good}</span>
+						<span>neutral: {this.props.neutral}</span>
+						<span>bad: {this.props.bad}</span>
+						<span>total: {this.state.total}</span>
+						<span>positive percent: {this.state.percent}%</span>
+					</div>
+				) : (
+					<p>No feedback given</p>
+				)}
+
 			</div>
 		)
 	}
