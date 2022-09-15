@@ -1,5 +1,5 @@
 import React from 'react'
-import TaskWrapper from './components/TaskWrapper'
+import TaskWrapper from './TaskWrapper/TaskWrapper'
 
 const App = () => {
 
