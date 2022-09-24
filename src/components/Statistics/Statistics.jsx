@@ -1,48 +1,30 @@
-import React, { Component } from 'react'
+import { useState, useEffect } from 'react'
 import classes from './Statistics.module.scss'
 import { PropTypes } from 'prop-types'
 
-class Statistics extends Component {
+const Statistics = ({ good, neutral, bad }) => {
+  const [total, setTotal] = useState(0)
+  const [percent, setPercent] = useState(0)
 
-  constructor() {
-    super();
-
-    this.state = {
-      total: 0,
-      percent: 0,
-    };
+  const countTotalFeedback = () => {
+    const result = Object.values({ good, neutral, bad }).reduce((acc, item) => acc + item, 0)
+    setTotal(() => result)
   }
 
-  static propTypes = {
-    good: PropTypes.number.isRequired,
-    neutral: PropTypes.number.isRequired,
-    bad: PropTypes.number.isRequired,
+  const countPositiveFeedbackPercentage = () => {
+    const result = Math.floor(good / total * 100)
+    setPercent(result)
   }
 
-  countTotalFeedback = () => {
-    return Object.values(this.props).reduce((acc, item) => acc + item, 0)
-  }
+  useEffect(() => {
+    countTotalFeedback()
+    countPositiveFeedbackPercentage()
+  }, [good, neutral, bad, total])
 
-  countPositiveFeedbackPercentage = () => {
-    return Math.floor(this.props.good / this.state.total * 100)
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props !== prevProps) {
-      this.setState({ total: this.countTotalFeedback() })
-    }
-
-    if (this.state.total !== prevState.total) {
-      this.setState({ percent: this.countPositiveFeedbackPercentage() })
-    }
-  }
-
-  render() {
-    const { good, neutral, bad } = this.props
-    const { total, percent } = this.state
     return (
       <div className={classes.stats}>
-        {this.state.total ? (
+        {total ? (
           <div className={classes.stats}>
             <span >good: {good}</span>
             <span>neutral: {neutral}</span>
@@ -55,7 +37,12 @@ class Statistics extends Component {
         )}
       </div>
     )
-  }
+}
+
+Statistics.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
 }
 
 

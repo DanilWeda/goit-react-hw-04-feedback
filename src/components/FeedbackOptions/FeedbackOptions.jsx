@@ -1,25 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 import classes from './FeedbackOptions.module.scss'
 import { PropTypes } from 'prop-types'
 
-class FeedbackOptions extends Component {
-
-  static propTypes = {
-    options: PropTypes.arrayOf(PropTypes.string),
-    onLeaveFeedback: PropTypes.func.isRequired,
-  }
-
-  render() {
-    const [good, neutral, bad] = this.props.options
+const FeedbackOptions = ({ options: [good, neutral, bad], onLeaveFeedback }) => {
 
     return (
       <div className={classes.buttons}>
-        <button onClick={this.props.onLeaveFeedback(good)}>{good}</button>
-        <button onClick={this.props.onLeaveFeedback(neutral)}>{neutral}</button>
-        <button onClick={this.props.onLeaveFeedback(bad)}>{bad}</button>
+        <button onClick={onLeaveFeedback(good)}>{good}</button>
+        <button onClick={onLeaveFeedback(neutral)}>{neutral}</button>
+        <button onClick={onLeaveFeedback(bad)}>{bad}</button>
       </div>
     )
-  }
+}
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string),
+  onLeaveFeedback: PropTypes.func.isRequired,
 }
 
 
